@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description
+    xmlns="http://openoffice.org/extensions/description/2006"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+  <identifier value="com.example.worldbank"/>
+  <version value="1.0.0"/>
+  <display-name>
+    <name lang="en">World Bank Open Data Calc Add-In</name>
+  </display-name>
+  <publisher>
+    <name xlink:href="https://github.com/davidjayjackson/java_world_bank_open_data" lang="en">David Jackson</name>
+  </publisher>
+</description>

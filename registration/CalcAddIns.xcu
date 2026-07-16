@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:component-data
+    xmlns:oor="http://openoffice.org/2001/registry"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    oor:name="CalcAddIns" oor:package="org.openoffice.Office">
+  <node oor:name="AddInInfo">
+    <node oor:name="com.example.worldbank.WorldBankImpl" oor:op="replace">
+      <node oor:name="AddInFunctions">
+
+        <!-- =WBVALUE(country; indicator; [year]) -->
+        <node oor:name="wbValue" oor:op="replace">
+          <prop oor:name="DisplayName"><value xml:lang="en">WBVALUE</value></prop>
+          <prop oor:name="Description">
+            <value xml:lang="en">Returns a World Bank indicator value for a country and year, or the most recent available value if year is omitted. Returns #FETCHING, #NOT_FOUND, or #ERR if unresolved.</value>
+          </prop>
+          <prop oor:name="Category"><value>Add-In</value></prop>
+          <prop oor:name="CompatibilityName"><value xml:lang="en">WBVALUE</value></prop>
+          <node oor:name="Parameters">
+            <node oor:name="country" oor:op="replace">
+              <prop oor:name="DisplayName"><value xml:lang="en">country</value></prop>
+              <prop oor:name="Description"><value xml:lang="en">ISO2/ISO3 country code, e.g. "US" or "USA".</value></prop>
+            </node>
+            <node oor:name="indicator" oor:op="replace">
+              <prop oor:name="DisplayName"><value xml:lang="en">indicator</value></prop>
+              <prop oor:name="Description"><value xml:lang="en">World Bank indicator code, e.g. "NY.GDP.MKTP.CD".</value></prop>
+            </node>
+            <node oor:name="year" oor:op="replace">
+              <prop oor:name="DisplayName"><value xml:lang="en">year</value></prop>
+              <prop oor:name="Description"><value xml:lang="en">Optional. A 4-digit year. Omit for the most recent available value.</value></prop>
+            </node>
+          </node>
+        </node>
+
+        <!-- =WBSERIES(country; indicator; [start_year]; [end_year]) -->
+        <node oor:name="wbSeries" oor:op="replace">
+          <prop oor:name="DisplayName"><value xml:lang="en">WBSERIES</value></prop>
+          <prop oor:name="Description">
+            <value xml:lang="en">Returns a time series of [year, value] pairs for a country and indicator as a spillable array, sorted ascending by year. Enter as an array formula (Ctrl+Shift+Enter) to see all rows.</value>
+          </prop>
+          <prop oor:name="Category"><value>Add-In</value></prop>
+          <prop oor:name="CompatibilityName"><value xml:lang="en">WBSERIES</value></prop>
+          <node oor:name="Parameters">
+            <node oor:name="country" oor:op="replace">
+              <prop oor:name="DisplayName"><value xml:lang="en">country</value></prop>
+              <prop oor:name="Description"><value xml:lang="en">ISO2/ISO3 country code, e.g. "US" or "USA".</value></prop>
+            </node>
+            <node oor:name="indicator" oor:op="replace">
+              <prop oor:name="DisplayName"><value xml:lang="en">indicator</value></prop>
+              <prop oor:name="Description"><value xml:lang="en">World Bank indicator code, e.g. "NY.GDP.MKTP.CD".</value></prop>
+            </node>
+            <node oor:name="startYear" oor:op="replace">
+              <prop oor:name="DisplayName"><value xml:lang="en">start_year</value></prop>
+              <prop oor:name="Description"><value xml:lang="en">Optional. First year of the range (inclusive). Omit for the full available series.</value></prop>
+            </node>
+            <node oor:name="endYear" oor:op="replace">
+              <prop oor:name="DisplayName"><value xml:lang="en">end_year</value></prop>
+              <prop oor:name="Description"><value xml:lang="en">Optional. Last year of the range (inclusive).</value></prop>
+            </node>
+          </node>
+        </node>
+
+        <!-- =WBLATEST(country; indicator) -->
+        <node oor:name="wbLatest" oor:op="replace">
+          <prop oor:name="DisplayName"><value xml:lang="en">WBLATEST</value></prop>
+          <prop oor:name="Description">
+            <value xml:lang="en">Returns the most recent value plus its year as a two-cell row (value, year), for dashboards. Enter as an array formula.</value>
+          </prop>
+          <prop oor:name="Category"><value>Add-In</value></prop>
+          <prop oor:name="CompatibilityName"><value xml:lang="en">WBLATEST</value></prop>
+          <node oor:name="Parameters">
+            <node oor:name="country" oor:op="replace">
+              <prop oor:name="DisplayName"><value xml:lang="en">country</value></prop>
+              <prop oor:name="Description"><value xml:lang="en">ISO2/ISO3 country code, e.g. "US" or "USA".</value></prop>
+            </node>
+            <node oor:name="indicator" oor:op="replace">
+              <prop oor:name="DisplayName"><value xml:lang="en">indicator</value></prop>
+              <prop oor:name="Description"><value xml:lang="en">World Bank indicator code, e.g. "NY.GDP.MKTP.CD".</value></prop>
+            </node>
+          </node>
+        </node>
+
+        <!-- =WBMETA(indicator) -->
+        <node oor:name="wbMeta" oor:op="replace">
+          <prop oor:name="DisplayName"><value xml:lang="en">WBMETA</value></prop>
+          <prop oor:name="Description">
+            <value xml:lang="en">Returns an indicator's human-readable name (e.g. "GDP (current US$)"), for labeling.</value>
+          </prop>
+          <prop oor:name="Category"><value>Add-In</value></prop>
+          <prop oor:name="CompatibilityName"><value xml:lang="en">WBMETA</value></prop>
+          <node oor:name="Parameters">
+            <node oor:name="indicator" oor:op="replace">
+              <prop oor:name="DisplayName"><value xml:lang="en">indicator</value></prop>
+              <prop oor:name="Description"><value xml:lang="en">World Bank indicator code, e.g. "NY.GDP.MKTP.CD".</value></prop>
+            </node>
+          </node>
+        </node>
+
+        <!-- =WBLASTERROR() -->
+        <node oor:name="wbLastError" oor:op="replace">
+          <prop oor:name="DisplayName"><value xml:lang="en">WBLASTERROR</value></prop>
+          <prop oor:name="Description">
+            <value xml:lang="en">Returns the most recent fetch error message, for diagnostics. Empty string if no error has occurred.</value>
+          </prop>
+          <prop oor:name="Category"><value>Add-In</value></prop>
+          <prop oor:name="CompatibilityName"><value xml:lang="en">WBLASTERROR</value></prop>
+        </node>
+
+        <!-- =WBCACHECLEAR() -->
+        <node oor:name="wbCacheClear" oor:op="replace">
+          <prop oor:name="DisplayName"><value xml:lang="en">WBCACHECLEAR</value></prop>
+          <prop oor:name="Description">
+            <value xml:lang="en">Clears every cached response, forcing fresh fetches. Returns the number of cache entries cleared.</value>
+          </prop>
+          <prop oor:name="Category"><value>Add-In</value></prop>
+          <prop oor:name="CompatibilityName"><value xml:lang="en">WBCACHECLEAR</value></prop>
+        </node>
+
+      </node>
+    </node>
+  </node>
+</oor:component-data>

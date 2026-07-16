@@ -1,0 +1,110 @@
+#include <com/sun/star/uno/XInterface.idl>
+
+module com { module example { module worldbank {
+
+    /** Add-in interface exposing World Bank Open Data indicator values as
+        LibreOffice Calc worksheet functions.
+
+        No API key is required - the World Bank Indicators API
+        (https://api.worldbank.org/v2/) is open.
+
+        Cell functions in this add-in never block on network I/O and never
+        throw. Every function resolves against a shared, TTL'd, background-
+        refreshed cache and returns either the requested value (fresh or
+        last-known-good cached data) or one of three sentinels:
+        <ul>
+          <li>"#FETCHING" - first request for this data; a background fetch
+              was just started. Recalculate (F9 / Ctrl+Shift+F9) once it
+              completes.</li>
+          <li>"#NOT_FOUND" - the request reached the API, but no matching
+              data exists (unknown indicator/country pairing, or every value
+              in range is null).</li>
+          <li>"#ERR" - the fetch failed persistently (network error, or an
+              invalid indicator/country code rejected by the API). Call
+              WBLASTERROR() for the detail message.</li>
+        </ul>
+
+        Table-returning functions return a matrix (sequence of sequences);
+        LibreOffice has no dynamic spill, so select the output range and
+        enter the formula as an array formula (Ctrl+Shift+Enter) to see every
+        row. A plain single-cell entry shows only the top-left cell. */
+    interface XWorldBank
+    {
+        interface ::com::sun::star::uno::XInterface;
+
+        /** A single indicator value for a country and year.
+
+            @param country ISO2 or ISO3 country code, e.g. "US" or "USA".
+                May also be a World Bank aggregate code (e.g. "WLD" for
+                World) or a semicolon-joined list (e.g. "US;GB;DE"), in
+                which case the first matching observation is returned.
+            @param indicator World Bank indicator code, e.g.
+                "NY.GDP.MKTP.CD".
+            @param year optional. A 4-digit year. When omitted, the most
+                recent non-null value is returned (uses mrv=1). Declared as
+                <em>any</em> so it may be omitted.
+            @returns the numeric value, or a sentinel string.
+         */
+        any wbValue(
+            [in] string country,
+            [in] string indicator,
+            [in] any year );
+
+        /** A time series of [year, value] pairs for a country and
+            indicator.
+
+            @param country ISO2 or ISO3 country code, e.g. "US" or "USA".
+            @param indicator World Bank indicator code, e.g.
+                "NY.GDP.MKTP.CD".
+            @param startYear optional. First year of the range (inclusive).
+                Declared as <em>any</em> so it may be omitted; when omitted
+                (with endYear also omitted) the full available series is
+                returned.
+            @param endYear optional. Last year of the range (inclusive).
+                Declared as <em>any</em> so it may be omitted.
+            @returns a matrix sorted ascending by year: [year, value] rows
+                (two columns), or three columns (country, year, value) when
+                <em>country</em> names more than one code.
+         */
+        sequence< sequence< any > > wbSeries(
+            [in] string country,
+            [in] string indicator,
+            [in] any startYear,
+            [in] any endYear );
+
+        /** The most recent available value plus its year, as a two-cell
+            row - convenient for dashboards.
+
+            @param country ISO2 or ISO3 country code, e.g. "US" or "USA".
+            @param indicator World Bank indicator code, e.g.
+                "NY.GDP.MKTP.CD".
+            @returns a single-row matrix: [value, year], or a one-cell
+                sentinel row on failure.
+         */
+        sequence< sequence< any > > wbLatest(
+            [in] string country,
+            [in] string indicator );
+
+        /** An indicator's human-readable name, for labeling.
+
+            @param indicator World Bank indicator code, e.g.
+                "NY.GDP.MKTP.CD".
+            @returns the indicator's name (e.g. "GDP (current US$)"), or a
+                sentinel string.
+         */
+        any wbMeta( [in] string indicator );
+
+        /** The most recent fetch error message, for diagnostics.
+
+            @returns the last error message, or an empty string if none.
+         */
+        string wbLastError();
+
+        /** Clear every cached response.
+
+            @returns the number of cache entries cleared.
+         */
+        double wbCacheClear();
+    };
+
+}; }; };
