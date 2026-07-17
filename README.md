@@ -11,14 +11,14 @@ as worksheet functions. **No API key required.**
 > New here? Follow the step-by-step [**Tutorial**](docs/TUTORIAL.md) — it
 > walks through every function and feature with copy-pasteable formulas.
 
-| Function | Signature | Returns |
-|----------|-----------|---------|
-| `WBVALUE`     | `WBVALUE(country; indicator; [year])`               | a single indicator value (number), or the most recent available value if `year` is omitted |
-| `WBSERIES`    | `WBSERIES(country; indicator; [start_year]; [end_year])` | spillable array: `[year, value]` rows, ascending by year (a `country` column is added when you pass more than one country code) |
-| `WBLATEST`    | `WBLATEST(country; indicator)`                      | spillable two-cell row: `[value, year]` |
-| `WBMETA`      | `WBMETA(indicator)`                                 | the indicator's human-readable name, e.g. `"GDP (current US$)"` |
-| `WBLASTERROR` | `WBLASTERROR()`                                     | most recent fetch error message (diagnostics) |
-| `WBCACHECLEAR`| `WBCACHECLEAR()`                                    | clears the cache; returns the number of entries cleared (best-effort, see note below) |
+| Function | Signature | Returns | Columns |
+|----------|-----------|---------|---------|
+| `WBVALUE`     | `WBVALUE(country; indicator; [year])`               | a single indicator value (number), or the most recent available value if `year` is omitted | *(scalar, no columns)* |
+| `WBSERIES`    | `WBSERIES(country; indicator; [start_year]; [end_year])` | spillable array: `[year, value]` rows, ascending by year (a `country` column is added when you pass more than one country code) | `year, value` — or `country, year, value` for more than one country code |
+| `WBLATEST`    | `WBLATEST(country; indicator)`                      | spillable two-cell row: `[value, year]` | `value, year` |
+| `WBMETA`      | `WBMETA(indicator)`                                 | the indicator's human-readable name, e.g. `"GDP (current US$)"` | *(scalar, no columns)* |
+| `WBLASTERROR` | `WBLASTERROR()`                                     | most recent fetch error message (diagnostics) | *(scalar, no columns)* |
+| `WBCACHECLEAR`| `WBCACHECLEAR()`                                    | clears the cache; returns the number of entries cleared (best-effort, see note below) | *(scalar, no columns)* |
 
 > In Calc's UI, arguments are separated by **semicolons**:
 > `=WBVALUE("US"; "NY.GDP.MKTP.CD"; 2020)`.
@@ -132,6 +132,10 @@ LibreOffice instance.
   single country. When `country` names more than one code (semicolon-joined
   or `"all"`), a leading `country` column is added, so pick a wide enough
   output range in that case.
+- **No header row.** `WBSERIES` and `WBLATEST` spill data only — the column
+  names in the table above describe the value order, not literal text
+  written to the sheet. Type your own header row above the array formula if
+  you want labels.
 - **Null values.** The World Bank API returns `value: null` for years a
   country/indicator has no data for. `WBSERIES` shows these years with an
   empty cell (never `0`); `WBVALUE`/`WBLATEST` skip null years entirely when

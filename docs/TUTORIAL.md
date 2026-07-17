@@ -299,17 +299,22 @@ sheet repeatedly costs nothing extra.
 
 ## Quick reference
 
-| Function | Entry mode | Purpose |
-|---|---|---|
-| `WBVALUE(country; indicator; [year])` | normal cell | one number |
-| `WBSERIES(country; indicator; [start]; [end])` | **array formula** | a table of years |
-| `WBLATEST(country; indicator)` | **array formula** | value + year, one row |
-| `WBMETA(indicator)` | normal cell | indicator's name |
-| `WBLASTERROR()` | normal cell | last failure's detail |
-| `WBCACHECLEAR()` | normal cell | force a fresh refetch |
+| Function | Entry mode | Purpose | Columns |
+|---|---|---|---|
+| `WBVALUE(country; indicator; [year])` | normal cell | one number | *(scalar, no columns)* |
+| `WBSERIES(country; indicator; [start]; [end])` | **array formula** | a table of years | `year, value` — or `country, year, value` for more than one country |
+| `WBLATEST(country; indicator)` | **array formula** | value + year, one row | `value, year` |
+| `WBMETA(indicator)` | normal cell | indicator's name | *(scalar, no columns)* |
+| `WBLASTERROR()` | normal cell | last failure's detail | *(scalar, no columns)* |
+| `WBCACHECLEAR()` | normal cell | force a fresh refetch | *(scalar, no columns)* |
 
 **Array formula reminder**: select the *whole* output range first, type the
 formula, then **Ctrl+Shift+Enter** (not plain Enter).
+
+**No header row**: `WBSERIES` and `WBLATEST` spill data only — the
+`year, value` / `value, year` column order above is *not* written to the
+sheet as text. Type your own header row in the cells above the array
+formula's output range if you want labels.
 
 **Sentinel reminder**: `#FETCHING` → wait and recalculate. `#NOT_FOUND` →
 no data for that combination. `#ERR` → check `WBLASTERROR()`.
