@@ -6,6 +6,16 @@ documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-07-16
+
+### Documentation
+- README and TUTORIAL function tables now list the exact column names each
+  table-returning function spills (`WBSERIES` → `year, value` or
+  `country, year, value`; `WBLATEST` → `value, year`).
+- Noted that `WBSERIES`/`WBLATEST` never write a header row — the column
+  names are descriptive only, and any labels above the array formula must
+  be typed in manually.
+
 ## [1.0.0] - 2026-07-16
 
 First release. A Java UNO add-in (`com.sun.star.sheet.AddIn`) exposing the
