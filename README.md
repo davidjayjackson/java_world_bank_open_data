@@ -66,7 +66,7 @@ restart LibreOffice.
 ## Install (prebuilt)
 
 Download `WorldBank.oxt` from the
-[releases page](https://github.com/davidjayjackson/java_world_bank_open_data/releases)
+[v1.0.1 release](https://github.com/davidjayjackson/java_world_bank_open_data/releases/tag/v1.0.1)
 and install it — no build required, no key to configure:
 
 ```bash
